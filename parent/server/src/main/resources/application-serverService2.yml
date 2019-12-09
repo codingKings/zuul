@@ -1,0 +1,22 @@
+server:
+  port: 8096
+spring: 
+  application: 
+    name: server-service
+  profiles: serverService2
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&autoReconnect=true
+    username: root
+    password: 123
+    
+mybatis: 
+  type-aliases-package: com.eway.user.pojo
+  
+eureka: 
+  client: 
+    service-url: 
+      defaultZone: http://localhost:9095/eureka,http://localhost:9096/eureka
+  instance: 
+    prefer-ip-address: true
+    ip-address: 127.0.0.1

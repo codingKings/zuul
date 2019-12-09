@@ -1,0 +1,15 @@
+server:
+  port: 9001
+spring: 
+  application: 
+    name: invoke-service
+  
+eureka: 
+  client: 
+    service-url: 
+      defaultZone: http://localhost:9095/eureka,http://localhost:9096/eureka
+    # 每隔10秒拉取一次服务
+    registry-fetch-interval-seconds: 10
+  instance: 
+    prefer-ip-address: true
+    ip-address: 127.0.0.1

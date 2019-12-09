@@ -1,0 +1,25 @@
+server:
+  port: 8095
+spring: 
+  application: 
+    name: server-service
+  profiles: serverService1
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false&autoReconnect=true
+    username: root
+    password: 123
+    
+mybatis: 
+  type-aliases-package: com.eway.user.pojo
+  
+eureka: 
+  client: 
+    service-url: 
+      defaultZone: http://localhost:9095/eureka,http://localhost:9096/eureka
+  instance: 
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    # 每隔30秒发送一次请求，如果隔了90秒还没发请求，默认服务挂掉了
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90

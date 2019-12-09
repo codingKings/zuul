@@ -1,0 +1,59 @@
+server: 
+  port: 9010
+#  路由规则
+#zuul: 
+#  routes: 
+#    hehe: 
+#      path: /user-service/**
+#      url: http://127.0.0.1:8095
+
+# 由于路由规则中url写死了，需要把url写成服务Id，所以有如下配置   内部已实现负载均衡和请求转发  这就是面向服务的路由
+eureka: 
+  client: 
+    service-url: 
+      defaultZone: http://localhost:9095/eureka
+  # 第一种写法
+#zuul: 
+#  routes: 
+#    haha: 
+#      path: /user-service/**
+#      serviceId: server-service
+  #第二种写法  简化配置   key是服务的Id server-service,值是服务的映射路径 /user-service/**,凡是遵循这个路径的都会转发到这个服务Id代表的服务 ，如下
+#zuul: 
+#  routes: 
+#    server-service: /user-service/**
+  #最终写法
+spring: 
+  application: 
+    name: gateway
+#zuul: 
+#  routes: 
+#    server-service: /user/**    
+#    #  这里默认所有的服务，如果不路由某个服务，如不路由invoke-service,则需要配置
+#    ignored-services: 
+#      - invoke-service
+     # 以下是路由前缀配置
+zuul: 
+  prefix: /api   #全局的前缀
+  routes: 
+    server-service: /user/**
+      #path: /user/**
+      #serviceId: server-service
+      #strip-prefix: false  # 局部的前缀
+    ignored-services: 
+      - invoke-service
+
+# 超时   ribbon的超时时长，真实值是(read+connect)*2,必须小于hystrix时长
+hystrix: 
+  command: 
+    default: 
+      execution: 
+        isolation: 
+          thread: 
+            timeoutInMilliseconds: 6000
+ribbon:
+  ConnectionTimeOut: 500
+  ReadTimeOut: 1000
+  MaxAutoRetriesNextServer: 0   #不重试
+      
+  
